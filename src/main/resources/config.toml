@@ -1,0 +1,81 @@
+# WIKI: https://plugin.sandtripper.cn/SandJoin
+
+# 新玩家加入时的操作
+[player-first-join]
+enabled = true
+# 关于operations，可以查看该文件结尾的注释
+operations = [
+    '[BC_TEXT] &c全&6体&e起&a立&b! &9欢&5迎&d新&c玩&6家 &e&l{PLAYER}',
+]
+
+# 非新玩家加入时的操作
+[player-join]
+enabled = true
+# 关于operations，可以查看该文件结尾的注释
+operations = [
+    '[BC_TEXT] &2+&7 {PLAYER}',
+]
+
+# 玩家离开时的操作
+[player-leave]
+enabled = true
+# 关于operations，可以查看该文件结尾的注释
+operations = [
+    '[BC_TEXT] &4-&7 {PLAYER}',
+]
+
+# 反刷屏
+[anti-flood]
+# 你希望延迟多少ms才开始处理玩家加入事件
+# 设置为合适的值可以跳过秒退的玩家，设置为 0 则立即处理，强烈建议不要设置为0
+player-join-delay = 300
+
+# 在player-join-leave-seconds秒内如果超过
+# player-join-leave-limit的加入离开数量被播报，则暂停播报
+player-join-leave-seconds = 60
+player-join-leave-limit = 10
+
+# 在player-first-join-seconds秒内如果超过
+# player-first-join-limit的新玩家数量被播报，则暂停播报新玩家
+player-first-join-seconds = 60
+player-first-join-limit = 5
+# 暂停播报新玩家时，是否停止记录新玩家
+not-write-first-join = false
+
+[other]
+# 忽略的玩家
+ignore-players = [
+    'operator',
+]
+
+# operations 的格式
+# 先举个例子：
+# operations = [
+#    '[TEXT] &c 欢迎你来到服务器',
+#    '[MINIMESSAGE] <red>欢迎你来到服务器',
+#    '[JSON] {"text":"欢迎你来到服务器","color":"red"}',
+#    '[TITLE] {"title": "&c欢迎", "sub-title": "&b欢迎加入服务器", "stay": 3000, "fade-in": 500, "fade-out": 500}',
+#    '[BOSSBAR] {"content": "欢迎你来到服务器", "stay": 3000, "color": "yellow"}',
+#    '[ACTIONBAR] &c欢迎你来到服务器',
+#    '[BC_TEXT] &c 欢迎玩家 &e{PLAYER}',
+#    '[BC_MINIMESSAGE] <red>欢迎玩家 <gold>{PLAYER}',
+#    '[BC_JSON] {"text":"欢迎玩家 {PLAYER}","color":"red"}',
+#    '[BC_TITLE] {"title": "&c欢迎", "sub-title": "&b欢迎玩家&e{PLAYER}", "stay": 3000, "fade-in": 500, "fade-out": 500}',
+#    '[BC_BOSSBAR] {"content": "欢迎玩家&e{PLAYER}", "stay": 3000, "color": "yellow"}',
+#    '[BC_ACTIONBAR] &c欢迎玩家&e{PLAYER}',
+#    '[DELAY] 1000',
+# ]
+
+# 标准格式为 '[TYPE] CONTENT'
+# 不要忘记 [TYPE] 和 CONTENT 之间的空格
+# 其中 TYPE 的可选值为：
+#   TEXT: 文本格式，使用颜色代码
+#   MINIMESSAGE: MiniMessage格式
+#   JSON: JSON格式
+#   TITLE: 标题格式，使用颜色代码，其中stay是持续时间，fade-in和fade-out是淡入淡出的时间，单位为ms
+#   BOSSBAR: BossBar格式，使用颜色代码，其中stay是持续时间，单位为ms，color是颜色，支持pink, blue, green, yellow, purple, white
+#   ACTIONBAR: ActionBar格式，使用颜色代码
+#   !!! 以上都是只发给该玩家，如果需要全体广播请在前面加上 BC_ 前缀
+#   DELAY: 延迟多少毫秒
+
+#   插件会按照 operations 的顺序依次执行，所以你可以灵活运用 DELAY
