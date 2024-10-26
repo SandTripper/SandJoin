@@ -15,6 +15,7 @@ import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.kyori.adventure.title.Title;
+import org.bstats.velocity.Metrics;
 import org.slf4j.Logger;
 
 import java.nio.file.Path;
@@ -30,6 +31,7 @@ public class SandJoin {
     private final ProxyServer server;
     private final Logger logger;
     private final Path dataDirectory;
+    private final Metrics.Factory metricsFactory;
     private ConfigManager configManager;
     private PlayerDataManager playerDataManager;
     private Queue<Long> joinLeaveQueue;
@@ -37,14 +39,18 @@ public class SandJoin {
     private boolean isStopped;
 
     @Inject
-    public SandJoin(ProxyServer server, Logger logger, @DataDirectory Path dataDirectory) {
+    public SandJoin(ProxyServer server, Logger logger, @DataDirectory Path dataDirectory, Metrics.Factory metricsFactory) {
         this.server = server;
         this.logger = logger;
         this.dataDirectory = dataDirectory;
+        this.metricsFactory = metricsFactory;
     }
 
     @Subscribe
     public void onProxyInitialization(ProxyInitializeEvent event) {
+        int pluginId = 23722;
+        Metrics metrics = metricsFactory.make(this, pluginId);
+
         // Plugin startup logic
         this.configManager = new ConfigManager(this, dataDirectory);
         this.playerDataManager = new PlayerDataManager(this, dataDirectory);
